@@ -1,6 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:whatsappuiclone/screens/alyonafin/ContactScreen.dart';
+import 'package:whatsappuiclone/screens/alyonafin/FillFormScreen.dart';
 import 'package:whatsappuiclone/screens/alyonafin/FormFailureScreen.dart';
 import 'package:whatsappuiclone/screens/alyonafin/FormSuccessScreen.dart';
 
@@ -34,10 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return const TabBarView(
       children: <Widget>[
         Center(
-          child: FormSuccessScreen(),
+          child: ContactScreen(),
         ),
         Center(
-          child: FormFailureScreen(),
+          child: FillFormScreen(),
         )
       ],
     );
@@ -167,17 +169,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  static Column logoWidget() {
+  Widget logoWidget() {
     return Column(
       children: [
         Container(
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.green, width: 2),
-              borderRadius: const BorderRadius.all(Radius.circular(80))),
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(80))),
           child: Image.asset(
             "assets/images/alyonaicon.jpeg",
-            height: 70,
-            width: 70,
+            height: 90,
+            width: 90,
           ),
         ),
         const Text(
