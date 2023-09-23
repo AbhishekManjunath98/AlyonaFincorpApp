@@ -2,6 +2,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsappuiclone/screens/HomeScreen.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:whatsappuiclone/screens/alyonafin/SplashScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,6 +21,6 @@ class MyApp extends StatelessWidget {
               seedColor: const Color.fromARGB(255, 47, 2, 138)),
           useMaterial3: true,
         ),
-        home: const HomeScreen());
+        home: const SplashScreen());
   }
 }

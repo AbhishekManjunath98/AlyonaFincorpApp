@@ -2,9 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:whatsappuiclone/screens/alyonafin/ContactScreen.dart';
+import 'package:whatsappuiclone/screens/alyonafin/EnterCodeScreen.dart';
 import 'package:whatsappuiclone/screens/alyonafin/FillFormScreen.dart';
 import 'package:whatsappuiclone/screens/alyonafin/FormFailureScreen.dart';
 import 'package:whatsappuiclone/screens/alyonafin/FormSuccessScreen.dart';
+import 'package:whatsappuiclone/screens/alyonafin/SplashScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -36,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return const TabBarView(
       children: <Widget>[
         Center(
-          child: ContactScreen(),
+          child: SplashScreen(),
         ),
         Center(
           child: FillFormScreen(),
