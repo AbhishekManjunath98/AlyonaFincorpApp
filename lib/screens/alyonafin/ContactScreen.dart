@@ -1,7 +1,10 @@
 // ignore_for_file: file_names, avoid_print, prefer_interpolation_to_compose_strings
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server/gmail.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,9 +17,21 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
+  final inputName = TextEditingController();
+  final inputPhone = TextEditingController();
+  final inputMessage = TextEditingController();
+
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    inputName.dispose();
+    inputPhone.dispose();
+    inputMessage.dispose();
+    super.dispose();
   }
 
   void sendMail() async {
@@ -82,6 +97,89 @@ class _ContactScreenState extends State<ContactScreen> {
     }
   }
 
+  Future<void> openMail() async {
+    // Create a list of Attachment objects.
+
+    // Create a Uri object with the following URL.
+    final uri = Uri(
+      scheme: 'mailto',
+      path: 'recipient@example.com',
+      queryParameters: <String, String>{
+        'subject': 'New Contact Query Recieved [0089476] (Alyona MicroFinance)',
+        'cc:': '[cc@example.com]',
+        'bcc:': '[bcc@example.com]',
+        'body':
+            'Just now new contact message recieved from our app. \n <b>Applicant Name</b> : Sudhir Kumar\n <b>Father Name</b> : Mahawat Das\nAddress : Belaganj, Gaya\nMessage : I wanted to know loan interest rates\nDate : ${DateTime.now().toString()}',
+        'attachments': "/path/to/attachment1.txt",
+      },
+    );
+
+    // Launch the Uri.
+    await launchUrl(uri);
+  }
+
+  void showSnackBar({required String type, required String msg}) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    final snackBar = SnackBar(
+      backgroundColor: type == "f" ? Colors.red : Colors.green,
+      duration: const Duration(seconds: 8),
+      content: Text(
+        msg,
+        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
+      ),
+    );
+
+    scaffoldMessenger.showSnackBar(snackBar);
+  }
+
+  void validateFormDetails() {
+    if (inputName.text.isNotEmpty &&
+        inputPhone.text.isNotEmpty &&
+        inputMessage.text.isNotEmpty) {
+      showSnackBar(
+          type: "s",
+          msg:
+              "Now Preparing the Mail..Click Send in Gmail Upper Left Corner to Send this Mail to Alyona MicroFinance..");
+      flutterMailer();
+    } else {
+      showSnackBar(
+          type: "f",
+          msg:
+              "Please Fill All the details..Some Details Are Missing..Check And Try Again!!!");
+    }
+  }
+
+  String generateRandomNumber(int length) {
+    const digits = '0123456789';
+    final random = Random();
+    final randomNumber = StringBuffer();
+    for (var i = 0; i < length; i++) {
+      randomNumber.write(digits[random.nextInt(digits.length)]);
+    }
+    return randomNumber.toString();
+  }
+
+  void flutterMailer() async {
+    const GMAIL_SCHEMA = 'com.google.android.gm';
+
+    final MailOptions mailOptions = MailOptions(
+      body:
+          'Just now new contact message recieved from our app. <BR><BR> Applicant Name : ${inputName.text}<BR>Phone Number : ${inputPhone.text} <BR>Message : ${inputMessage.text} <BR> Date : ${DateTime.now().toString()} <BR><BR> Happy Loan Processing<BR> Cheers, Alyona MicroFinance Team<BR> Date : ${DateTime.now()}',
+      subject: 'New Contact Query Recieved [00${generateRandomNumber(6)}] (Alyona MicroFinance)',
+      recipients: ['example@example.com'],
+      isHTML: true,
+      bccRecipients: ['other@example.com'],
+      ccRecipients: ['third@example.com'],
+      appSchema: GMAIL_SCHEMA,
+    );
+    try {
+      Future<MailerResponse> mr = FlutterMailer.send(mailOptions);
+      print("mr : ${mr.toString()}");
+    } on Exception catch (e) {
+      print("fluttermailer error : ${e.toString()}");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -110,8 +208,12 @@ class _ContactScreenState extends State<ContactScreen> {
                   ),
                 ),
                 const SizedBox(height: 25),
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  decoration: const InputDecoration(
+                    hintStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.normal),
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.green, width: 2),
                         borderRadius: BorderRadius.all(Radius.circular(48.0))),
@@ -122,14 +224,19 @@ class _ContactScreenState extends State<ContactScreen> {
                   ),
                   keyboardType: TextInputType.name,
                   textCapitalization: TextCapitalization.characters,
-                  style: TextStyle(
+                  controller: inputName,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 const SizedBox(height: 15),
-                const TextField(
-                  decoration: InputDecoration(
+                TextField(
+                  decoration: const InputDecoration(
+                    hintStyle: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 15.0,
+                        fontWeight: FontWeight.normal),
                     focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.green, width: 2),
                         borderRadius: BorderRadius.all(Radius.circular(48.0))),
@@ -140,16 +247,22 @@ class _ContactScreenState extends State<ContactScreen> {
                   ),
                   keyboardType: TextInputType.phone,
                   textCapitalization: TextCapitalization.words,
-                  style: TextStyle(
+                  controller: inputPhone,
+                  maxLength: 10,
+                  style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 const SizedBox(height: 15),
-                const SizedBox(
+                SizedBox(
                   height: 65,
                   child: TextField(
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
+                      hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.normal),
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.green, width: 2),
                           borderRadius:
@@ -163,7 +276,8 @@ class _ContactScreenState extends State<ContactScreen> {
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
                     expands: true,
-                    style: TextStyle(
+                    controller: inputMessage,
+                    style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.w700,
                     ),
@@ -207,9 +321,7 @@ class _ContactScreenState extends State<ContactScreen> {
           style: const ButtonStyle(
               backgroundColor: MaterialStatePropertyAll(Colors.green)),
           onPressed: () {
-            // sendMail();
-            launchGmailPlain();
-            print("send message btn clicked : ");
+            validateFormDetails();
           },
           child: const Text(
             "Send Message",

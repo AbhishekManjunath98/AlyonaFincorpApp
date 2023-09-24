@@ -38,10 +38,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return const TabBarView(
       children: <Widget>[
         Center(
-          child: EnterCodeScreen(),
+          child:  FillFormScreen(),
         ),
         Center(
-          child: FillFormScreen(),
+          child: ContactScreen(),
         )
       ],
     );
@@ -54,20 +54,20 @@ class _HomeScreenState extends State<HomeScreen> {
         tabs: <Widget>[
           Tab(
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Icon(Icons.copy),
+              Icon(Icons.file_copy),
               SizedBox(
                 width: 5,
               ),
-              Text("Clips"),
+              Text("Fill Application"),
             ]),
           ),
           Tab(
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Icon(Icons.data_array),
+              Icon(Icons.phone),
               SizedBox(
                 width: 5,
               ),
-              Text("Analytics"),
+              Text("Contact Us"),
             ]),
           ),
         ],

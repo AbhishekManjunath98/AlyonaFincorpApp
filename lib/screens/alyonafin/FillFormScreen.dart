@@ -1,5 +1,12 @@
+// ignore_for_file: avoid_print, constant_identifier_names
+
+import 'dart:io';
+import 'dart:math';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mailer/flutter_mailer.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:whatsappuiclone/screens/alyonafin/FormSuccessScreen.dart';
@@ -155,7 +162,122 @@ final provider = Provider<MyState>(
 
 class _FillFormScreenState extends State<FillFormScreen> {
   final onSelectionChanged = "";
-  Future<FilePickerResult>? filePickerAadharResult;
+  String aadharPath = "";
+  String panPath = "";
+  String jatiPath = "";
+  String aawasiyaPath = "";
+  String aayPath = "";
+  String photoPath = "";
+  final inputName = TextEditingController();
+  final inputfathersName = TextEditingController();
+  final inputaddress = TextEditingController();
+  final inputpinCode = TextEditingController();
+  final inputloanAmount = TextEditingController();
+  DateRangePickerSelectionChangedArgs? inputDob;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    inputName.dispose();
+    inputfathersName.dispose();
+    inputaddress.dispose();
+    inputpinCode.dispose();
+    inputloanAmount.dispose();
+    super.dispose();
+  }
+
+  String generateRandomNumber(int length) {
+    const digits = '0123456789';
+    final random = Random();
+    final randomNumber = StringBuffer();
+    for (var i = 0; i < length; i++) {
+      randomNumber.write(digits[random.nextInt(digits.length)]);
+    }
+    return randomNumber.toString();
+  }
+
+  void sendMessage() {}
+
+  void flutterMailer() async {
+    const GMAIL_SCHEMA = 'com.google.android.gm';
+
+    final MailOptions mailOptions = MailOptions(
+      body:
+          'Just Now A New Loan Application Was Submitted From App, Here are Deatails : <BR><BR> Applicant Name : ${inputName.text}<BR> Father Name : ${inputfathersName.text}<BR> Address : ${inputaddress.text}<BR><BR> Pin Code : ${inputpinCode.text}<BR> Loan Amount : ${inputloanAmount.text}<BR> Date of Birth : ${inputDob!.value.startDate.toString()}<BR> Date : ${DateTime.now()}<BR><BR> Below are the attached documents(Aadhar + Pan + Jati + Aaya + Aawasiya + Photo)<BR><BR> Happy Loan Processing<BR> Cheers, Alyona MicroFinance Team<BR> Date : ${DateTime.now()}',
+      subject:
+          'New Loan Application Recieved [00${generateRandomNumber(6)}] (Alyona MicroFinance)',
+      recipients: ['bibhakumori@gmail.com'],
+      isHTML: true,
+      bccRecipients: ['other@example.com'],
+      ccRecipients: ['third@example.com'],
+      attachments: [
+        aadharPath,
+        panPath,
+        jatiPath,
+        aawasiyaPath,
+        aayPath,
+        photoPath
+      ],
+      appSchema: GMAIL_SCHEMA,
+    );
+    try {
+      Future<MailerResponse> mr = FlutterMailer.send(mailOptions);
+      print("mr : ${mr.toString()}");
+    } on Exception catch (e) {
+      print("fluttermailer error : ${e.toString()}");
+    }
+  }
+
+  void showSnackBar({required String type, required String msg}) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    final snackBar = SnackBar(
+      backgroundColor: type == "f" ? Colors.red : Colors.green,
+      duration: const Duration(seconds: 8),
+      content: Text(
+        msg,
+        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
+      ),
+    );
+
+    scaffoldMessenger.showSnackBar(snackBar);
+  }
+
+  void validateFormDetails() {
+    if (inputName.text.isNotEmpty &&
+        inputfathersName.text.isNotEmpty &&
+        inputaddress.text.isNotEmpty &&
+        inputpinCode.text.isNotEmpty &&
+        inputloanAmount.text.isNotEmpty &&
+        inputDob!.value.startDate.toString().isNotEmpty &&
+        aadharPath != "" &&
+        aadharPath != "error" &&
+        panPath != "" &&
+        panPath != "error" &&
+        jatiPath != "" &&
+        jatiPath != "error" &&
+        aawasiyaPath != "" &&
+        aawasiyaPath != "error" &&
+        aayPath != "" &&
+        aayPath != "error" &&
+        photoPath != "" &&
+        photoPath != "error") {
+      showSnackBar(
+          type: "s",
+          msg:
+              "Now Preparing the Mail..Click Send in Gmail Upper Left Corner to Send this Mail to Alyona MicroFinance..");
+
+      flutterMailer();
+    } else {
+      showSnackBar(
+          type: "f",
+          msg:
+              "Please Fill All the details..Some Details Are Missing..Check And Try Again!!!");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -206,8 +328,8 @@ class _FillFormScreenState extends State<FillFormScreen> {
                 ),
               ),
               const SizedBox(height: 15),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                decoration: const InputDecoration(
                   hintStyle: TextStyle(
                       color: Colors.grey,
                       fontSize: 15.0,
@@ -222,14 +344,15 @@ class _FillFormScreenState extends State<FillFormScreen> {
                 ),
                 keyboardType: TextInputType.name,
                 textCapitalization: TextCapitalization.characters,
-                style: TextStyle(
+                controller: inputName,
+                style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
                     fontSize: 14.0),
               ),
               const SizedBox(height: 10),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                decoration: const InputDecoration(
                   hintStyle: TextStyle(
                       color: Colors.grey,
                       fontSize: 15.0,
@@ -244,14 +367,15 @@ class _FillFormScreenState extends State<FillFormScreen> {
                 ),
                 keyboardType: TextInputType.name,
                 textCapitalization: TextCapitalization.characters,
-                style: TextStyle(
+                controller: inputfathersName,
+                style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w700,
                     fontSize: 14.0),
               ),
               const SizedBox(height: 10),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                decoration: const InputDecoration(
                   hintStyle: TextStyle(
                       color: Colors.grey,
                       fontSize: 15.0,
@@ -266,14 +390,15 @@ class _FillFormScreenState extends State<FillFormScreen> {
                 ),
                 keyboardType: TextInputType.streetAddress,
                 textCapitalization: TextCapitalization.characters,
-                style: TextStyle(
+                controller: inputaddress,
+                style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w700,
                     fontSize: 14.0),
               ),
               const SizedBox(height: 10),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                decoration: const InputDecoration(
                   hintStyle: TextStyle(
                       color: Colors.grey,
                       fontSize: 15.0,
@@ -288,14 +413,15 @@ class _FillFormScreenState extends State<FillFormScreen> {
                 ),
                 keyboardType: TextInputType.phone,
                 textCapitalization: TextCapitalization.characters,
-                style: TextStyle(
+                controller: inputpinCode,
+                style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w700,
                     fontSize: 14.0),
               ),
               const SizedBox(height: 10),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                decoration: const InputDecoration(
                   hintStyle: TextStyle(
                       color: Colors.grey,
                       fontSize: 15.0,
@@ -310,7 +436,8 @@ class _FillFormScreenState extends State<FillFormScreen> {
                 ),
                 keyboardType: TextInputType.phone,
                 textCapitalization: TextCapitalization.characters,
-                style: TextStyle(
+                controller: inputloanAmount,
+                style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w700,
                     fontSize: 14.0),
@@ -329,10 +456,12 @@ class _FillFormScreenState extends State<FillFormScreen> {
                     onPressed: () {
                       dobDialog();
                     },
-                    child: const Text(
-                      "Select Date of Birth",
+                    child: Text(
+                      inputDob != null
+                          ? "Date of Birth ${inputDob!.value.startDate.toString().substring(0, 10)}"
+                          : "Select Date of Birth",
                       textAlign: TextAlign.left,
-                      style: TextStyle(color: Colors.black, fontSize: 14),
+                      style: const TextStyle(color: Colors.black, fontSize: 14),
                     )),
               ),
               const SizedBox(height: 25),
@@ -357,27 +486,60 @@ class _FillFormScreenState extends State<FillFormScreen> {
                     height: 40,
                     child: OutlinedButton(
                         style: ButtonStyle(
-                          side: MaterialStateProperty.all(
-                              const BorderSide(color: Colors.black)),
+                          backgroundColor: MaterialStateProperty.all(
+                              aadharPath != "" && aadharPath != "error"
+                                  ? Colors.green
+                                  : Colors.white),
+                          side: MaterialStateProperty.all(BorderSide(
+                              color: aadharPath != "" && aadharPath != "error"
+                                  ? Colors.green
+                                  : Colors.black)),
                           overlayColor: MaterialStateProperty.all(
                               const Color.fromARGB(255, 148, 211, 151)),
                         ),
                         onPressed: () async {
-                          filePickerAadharResult =
-                              FilePicker.platform.pickFiles(type: FileType.any)
-                                  as Future<FilePickerResult>?;
+                          FilePicker.platform
+                              .pickFiles(type: FileType.any)
+                              .then((value) {
+                            setState(() {
+                              aadharPath = value!.files.first.path!;
+                              print("aadharPath : $aadharPath");
+                            });
+                          }).onError((error, stackTrace) {
+                            setState(() {
+                              aadharPath == "error";
+                            });
+                          });
                         },
-                        child: const Text(
+                        child: Text(
                           "Upload Aadhar",
                           textAlign: TextAlign.left,
-                          style: TextStyle(color: Colors.black, fontSize: 14),
+                          style: TextStyle(
+                              color: aadharPath != "" && aadharPath != "error"
+                                  ? Colors.white
+                                  : Colors.black,
+                              fontSize: 14),
                         )),
                   ),
-                  Image.asset(
-                    "assets/images/check.png",
-                    fit: BoxFit.cover,
-                    height: 50,
-                    width: 50,
+                  Visibility(
+                    visible: aadharPath != "" && aadharPath != "error"
+                        ? true
+                        : false,
+                    child: Image.file(
+                      File(aadharPath),
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                    ),
+                  ),
+                  Visibility(
+                    visible: aadharPath.isEmpty ? true : false,
+                    child: Image.asset(
+                      "assets/images/check.png",
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                    ),
                   ),
                 ],
               ),
@@ -390,27 +552,58 @@ class _FillFormScreenState extends State<FillFormScreen> {
                     height: 40,
                     child: OutlinedButton(
                         style: ButtonStyle(
-                          side: MaterialStateProperty.all(
-                              const BorderSide(color: Colors.black)),
+                          backgroundColor: MaterialStateProperty.all(
+                              panPath != "" && panPath != "error"
+                                  ? Colors.green
+                                  : Colors.white),
+                          side: MaterialStateProperty.all(BorderSide(
+                              color: panPath != "" && panPath != "error"
+                                  ? Colors.green
+                                  : Colors.black)),
                           overlayColor: MaterialStateProperty.all(
                               const Color.fromARGB(255, 148, 211, 151)),
                         ),
                         onPressed: () async {
-                          filePickerAadharResult =
-                              FilePicker.platform.pickFiles(type: FileType.any)
-                                  as Future<FilePickerResult>?;
+                          FilePicker.platform
+                              .pickFiles(type: FileType.any)
+                              .then((value) {
+                            setState(() {
+                              panPath = value!.files.first.path!;
+                              print("panPath : $panPath");
+                            });
+                          }).onError((error, stackTrace) {
+                            setState(() {
+                              panPath == "error";
+                            });
+                          });
                         },
-                        child: const Text(
+                        child: Text(
                           "Upload Pan",
                           textAlign: TextAlign.left,
-                          style: TextStyle(color: Colors.black, fontSize: 14),
+                          style: TextStyle(
+                              color: panPath != "" && panPath != "error"
+                                  ? Colors.white
+                                  : Colors.black,
+                              fontSize: 14),
                         )),
                   ),
-                  Image.asset(
-                    "assets/images/check.png",
-                    fit: BoxFit.cover,
-                    height: 50,
-                    width: 50,
+                  Visibility(
+                    visible: panPath != "" && panPath != "error" ? true : false,
+                    child: Image.file(
+                      File(panPath),
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                    ),
+                  ),
+                  Visibility(
+                    visible: panPath.isEmpty ? true : false,
+                    child: Image.asset(
+                      "assets/images/check.png",
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                    ),
                   ),
                 ],
               ),
@@ -423,27 +616,59 @@ class _FillFormScreenState extends State<FillFormScreen> {
                     height: 40,
                     child: OutlinedButton(
                         style: ButtonStyle(
-                          side: MaterialStateProperty.all(
-                              const BorderSide(color: Colors.black)),
+                          backgroundColor: MaterialStateProperty.all(
+                              jatiPath != "" && jatiPath != "error"
+                                  ? Colors.green
+                                  : Colors.white),
+                          side: MaterialStateProperty.all(BorderSide(
+                              color: jatiPath != "" && jatiPath != "error"
+                                  ? Colors.green
+                                  : Colors.black)),
                           overlayColor: MaterialStateProperty.all(
                               const Color.fromARGB(255, 148, 211, 151)),
                         ),
                         onPressed: () async {
-                          filePickerAadharResult =
-                              FilePicker.platform.pickFiles(type: FileType.any)
-                                  as Future<FilePickerResult>?;
+                          FilePicker.platform
+                              .pickFiles(type: FileType.any)
+                              .then((value) {
+                            setState(() {
+                              jatiPath = value!.files.first.path!;
+                              print("jatiPath : $jatiPath");
+                            });
+                          }).onError((error, stackTrace) {
+                            setState(() {
+                              jatiPath == "error";
+                            });
+                          });
                         },
-                        child: const Text(
+                        child: Text(
                           "Upload Jati(Caste-Certificate)",
                           textAlign: TextAlign.left,
-                          style: TextStyle(color: Colors.black, fontSize: 12),
+                          style: TextStyle(
+                              color: jatiPath != "" && jatiPath != "error"
+                                  ? Colors.white
+                                  : Colors.black,
+                              fontSize: 12),
                         )),
                   ),
-                  Image.asset(
-                    "assets/images/check.png",
-                    fit: BoxFit.cover,
-                    height: 50,
-                    width: 50,
+                  Visibility(
+                    visible:
+                        jatiPath != "" && jatiPath != "error" ? true : false,
+                    child: Image.file(
+                      File(jatiPath),
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                    ),
+                  ),
+                  Visibility(
+                    visible: jatiPath.isEmpty ? true : false,
+                    child: Image.asset(
+                      "assets/images/check.png",
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                    ),
                   ),
                 ],
               ),
@@ -456,27 +681,62 @@ class _FillFormScreenState extends State<FillFormScreen> {
                     height: 40,
                     child: OutlinedButton(
                         style: ButtonStyle(
-                          side: MaterialStateProperty.all(
-                              const BorderSide(color: Colors.black)),
+                          backgroundColor: MaterialStateProperty.all(
+                              aawasiyaPath != "" && aawasiyaPath != "error"
+                                  ? Colors.green
+                                  : Colors.white),
+                          side: MaterialStateProperty.all(BorderSide(
+                              color:
+                                  aawasiyaPath != "" && aawasiyaPath != "error"
+                                      ? Colors.green
+                                      : Colors.black)),
                           overlayColor: MaterialStateProperty.all(
                               const Color.fromARGB(255, 148, 211, 151)),
                         ),
                         onPressed: () async {
-                          filePickerAadharResult =
-                              FilePicker.platform.pickFiles(type: FileType.any)
-                                  as Future<FilePickerResult>?;
+                          FilePicker.platform
+                              .pickFiles(type: FileType.any)
+                              .then((value) {
+                            setState(() {
+                              aawasiyaPath = value!.files.first.path!;
+                              print("aawasiyaPath : $aawasiyaPath");
+                            });
+                          }).onError((error, stackTrace) {
+                            setState(() {
+                              aawasiyaPath == "error";
+                            });
+                          });
                         },
-                        child: const Text(
+                        child: Text(
                           "Upload Aawasiya",
                           textAlign: TextAlign.left,
-                          style: TextStyle(color: Colors.black, fontSize: 14),
+                          style: TextStyle(
+                              color:
+                                  aawasiyaPath != "" && aawasiyaPath != "error"
+                                      ? Colors.white
+                                      : Colors.black,
+                              fontSize: 14),
                         )),
                   ),
-                  Image.asset(
-                    "assets/images/check.png",
-                    fit: BoxFit.cover,
-                    height: 50,
-                    width: 50,
+                  Visibility(
+                    visible: aawasiyaPath != "" && aawasiyaPath != "error"
+                        ? true
+                        : false,
+                    child: Image.file(
+                      File(aawasiyaPath),
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                    ),
+                  ),
+                  Visibility(
+                    visible: aawasiyaPath.isEmpty ? true : false,
+                    child: Image.asset(
+                      "assets/images/check.png",
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                    ),
                   ),
                 ],
               ),
@@ -489,27 +749,58 @@ class _FillFormScreenState extends State<FillFormScreen> {
                     height: 40,
                     child: OutlinedButton(
                         style: ButtonStyle(
-                          side: MaterialStateProperty.all(
-                              const BorderSide(color: Colors.black)),
+                          backgroundColor: MaterialStateProperty.all(
+                              aayPath != "" && aayPath != "error"
+                                  ? Colors.green
+                                  : Colors.white),
+                          side: MaterialStateProperty.all(BorderSide(
+                              color: aayPath != "" && aayPath != "error"
+                                  ? Colors.green
+                                  : Colors.black)),
                           overlayColor: MaterialStateProperty.all(
                               const Color.fromARGB(255, 148, 211, 151)),
                         ),
                         onPressed: () async {
-                          filePickerAadharResult =
-                              FilePicker.platform.pickFiles(type: FileType.any)
-                                  as Future<FilePickerResult>?;
+                          FilePicker.platform
+                              .pickFiles(type: FileType.any)
+                              .then((value) {
+                            setState(() {
+                              aayPath = value!.files.first.path!;
+                              print("aayPath : $aayPath");
+                            });
+                          }).onError((error, stackTrace) {
+                            setState(() {
+                              aayPath == "error";
+                            });
+                          });
                         },
-                        child: const Text(
+                        child: Text(
                           "Upload Aay(Income)",
                           textAlign: TextAlign.left,
-                          style: TextStyle(color: Colors.black, fontSize: 12),
+                          style: TextStyle(
+                              color: aayPath != "" && aayPath != "error"
+                                  ? Colors.white
+                                  : Colors.black,
+                              fontSize: 12),
                         )),
                   ),
-                  Image.asset(
-                    "assets/images/check.png",
-                    fit: BoxFit.cover,
-                    height: 50,
-                    width: 50,
+                  Visibility(
+                    visible: aayPath != "" && aayPath != "error" ? true : false,
+                    child: Image.file(
+                      File(aayPath),
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                    ),
+                  ),
+                  Visibility(
+                    visible: aayPath.isEmpty ? true : false,
+                    child: Image.asset(
+                      "assets/images/check.png",
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                    ),
                   ),
                 ],
               ),
@@ -522,27 +813,59 @@ class _FillFormScreenState extends State<FillFormScreen> {
                     height: 40,
                     child: OutlinedButton(
                         style: ButtonStyle(
-                          side: MaterialStateProperty.all(
-                              const BorderSide(color: Colors.black)),
+                          backgroundColor: MaterialStateProperty.all(
+                              photoPath != "" && photoPath != "error"
+                                  ? Colors.green
+                                  : Colors.white),
+                          side: MaterialStateProperty.all(BorderSide(
+                              color: photoPath != "" && photoPath != "error"
+                                  ? Colors.green
+                                  : Colors.black)),
                           overlayColor: MaterialStateProperty.all(
                               const Color.fromARGB(255, 148, 211, 151)),
                         ),
                         onPressed: () async {
-                          filePickerAadharResult =
-                              FilePicker.platform.pickFiles(type: FileType.any)
-                                  as Future<FilePickerResult>?;
+                          FilePicker.platform
+                              .pickFiles(type: FileType.any)
+                              .then((value) {
+                            setState(() {
+                              photoPath = value!.files.first.path!;
+                              print("photoPath : $photoPath");
+                            });
+                          }).onError((error, stackTrace) {
+                            setState(() {
+                              photoPath == "error";
+                            });
+                          });
                         },
-                        child: const Text(
+                        child: Text(
                           "Upload Applicants Photo",
                           textAlign: TextAlign.left,
-                          style: TextStyle(color: Colors.black, fontSize: 14),
+                          style: TextStyle(
+                              color: photoPath != "" && photoPath != "error"
+                                  ? Colors.white
+                                  : Colors.black,
+                              fontSize: 14),
                         )),
                   ),
-                  Image.asset(
-                    "assets/images/check.png",
-                    fit: BoxFit.cover,
-                    height: 50,
-                    width: 50,
+                  Visibility(
+                    visible:
+                        photoPath != "" && photoPath != "error" ? true : false,
+                    child: Image.file(
+                      File(photoPath),
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                    ),
+                  ),
+                  Visibility(
+                    visible: photoPath.isEmpty ? true : false,
+                    child: Image.asset(
+                      "assets/images/check.png",
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 50,
+                    ),
                   ),
                 ],
               ),
@@ -555,10 +878,11 @@ class _FillFormScreenState extends State<FillFormScreen> {
                         backgroundColor:
                             MaterialStatePropertyAll(Colors.green)),
                     onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const FormSuccessScreen()));
+                      validateFormDetails();
+                      // Navigator.push(
+                      //     context,
+                      //     MaterialPageRoute(
+                      //         builder: (context) => const FormSuccessScreen()));
                     },
                     child: const Text(
                       "Submit Application",
@@ -612,7 +936,15 @@ class _FillFormScreenState extends State<FillFormScreen> {
                   children: [
                     SfDateRangePicker(
                       onSelectionChanged:
-                          (dateRangePickerSelectionChangedArgs) {},
+                          (dateRangePickerSelectionChangedArgs) {
+                        setState(() {
+                          inputDob = dateRangePickerSelectionChangedArgs;
+                          print(
+                              "inputDob : ${dateRangePickerSelectionChangedArgs.value.toString()}");
+                          print(
+                              "startDate : ${dateRangePickerSelectionChangedArgs.value.startDate}");
+                        });
+                      },
                       selectionMode: DateRangePickerSelectionMode.range,
                       initialSelectedRange: PickerDateRange(
                           DateTime(1900, 1, 1), DateTime(2023, 1, 1)),
