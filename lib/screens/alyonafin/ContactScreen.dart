@@ -1,6 +1,10 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, avoid_print, prefer_interpolation_to_compose_strings
 
 import 'package:flutter/material.dart';
+import 'package:flutter_email_sender/flutter_email_sender.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({super.key});
@@ -10,6 +14,74 @@ class ContactScreen extends StatefulWidget {
 }
 
 class _ContactScreenState extends State<ContactScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  void sendMail() async {
+    String username = 'bibhakumori@gmail.com';
+    String password = 'bgaxnlkcwwylssxx';
+
+    final smtpServer = gmail(username, password);
+
+    final message = Message()
+      ..from = Address(username, 'Alyona MicroFinance')
+      ..recipients.add('gunjansharma1112info@gmail.com')
+      ..ccRecipients.addAll(['gunjansharma1112info@yahoo.com'])
+      ..bccRecipients.add(const Address('gunjansharma1112info@gmail.com'))
+      ..subject = 'Test Dart Mailer library :: 😀 :: ${DateTime.now()}'
+      ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+      ..html = "<h1>Test</h1>\n<p>Hey! Here's some HTML content</p>";
+
+    try {
+      final sendReport = await send(message, smtpServer);
+      print('Message sent: ' + sendReport.toString());
+      SnackBar(
+        content: Text(sendReport.toString()),
+        duration: const Duration(seconds: 10),
+      );
+    } on MailerException catch (e) {
+      print('Message not sent.${e.message}');
+      for (var p in e.problems) {
+        print('Problem: ${p.code}: ${p.msg}');
+      }
+    }
+  }
+
+  void launchFilledGmail() async {
+    final Email email = Email(
+      body:
+          'Just now new contact message recieved from our app. \n <b>Applicant Name</b> : Sudhir Kumar\n <b>Father Name</b> : Mahawat Das\nAddress : Belaganj, Gaya\nMessage : I wanted to know loan interest rates\nDate : ${DateTime.now().toString()}',
+      subject: 'New Contact Query Recieved [0089476] (Alyona MicroFinance)',
+      recipients: ['bibhakumori@gmail.com'],
+      cc: ['cc@example.com'],
+      bcc: ['bcc@example.com'],
+      //attachmentPaths: ['/path/to/attachment.zip'],
+      isHTML: true,
+    );
+
+    try {
+      await FlutterEmailSender.send(email);
+      print("Email app launched successfully..");
+    } on Exception catch (e) {
+      print('Error Occured while Launching email app : ${e.toString()}');
+    }
+  }
+
+  Future<void> launchGmailPlain() async {
+    String email = Uri.encodeComponent("mail@fluttercampus.com");
+    String subject = Uri.encodeComponent("Hello Flutter");
+    String body = Uri.encodeComponent("Hi! I'm Flutter Developer");
+    print(subject); //output: Hello%20Flutter
+    Uri mail = Uri.parse("mailto:$email?subject=$subject&body=$body");
+    if (await launchUrl(mail, mode: LaunchMode.externalApplication)) {
+      //email app opened
+    } else {
+      //email app is not opened
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -98,22 +170,7 @@ class _ContactScreenState extends State<ContactScreen> {
                   ),
                 ),
                 const SizedBox(height: 25),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width - 40,
-                  height: 50,
-                  child: TextButton(
-                      style: const ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll(Colors.green)),
-                      onPressed: () {},
-                      child: const Text(
-                        "Send Message",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 18),
-                      )),
-                ),
+                sendMessageButton(context),
                 const SizedBox(height: 10),
                 Row(
                   children: [
@@ -122,7 +179,7 @@ class _ContactScreenState extends State<ContactScreen> {
                       value: true,
                       onChanged: (value) {},
                     ),
-                  const  SizedBox(
+                    const SizedBox(
                       width: 220,
                       child: Text(
                         "By sending us message you agree and give AlyonaFinance team to contact you using details submitted by you.",
@@ -142,13 +199,33 @@ class _ContactScreenState extends State<ContactScreen> {
     );
   }
 
-AppBar appbarWidget() {
+  Widget sendMessageButton(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width - 40,
+      height: 50,
+      child: TextButton(
+          style: const ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(Colors.green)),
+          onPressed: () {
+            // sendMail();
+            launchGmailPlain();
+            print("send message btn clicked : ");
+          },
+          child: const Text(
+            "Send Message",
+            style: TextStyle(
+                color: Colors.white, fontWeight: FontWeight.w700, fontSize: 18),
+          )),
+    );
+  }
+
+  AppBar appbarWidget() {
     return AppBar(
       title: const Text('Alyona MicroFinance'),
     );
   }
 
-   Widget logoWidget() {
+  Widget logoWidget() {
     return Column(
       children: [
         Container(
@@ -272,5 +349,4 @@ AppBar appbarWidget() {
       ),
     );
   }
-
 }

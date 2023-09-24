@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return const TabBarView(
       children: <Widget>[
         Center(
-          child: SplashScreen(),
+          child: EnterCodeScreen(),
         ),
         Center(
           child: FillFormScreen(),

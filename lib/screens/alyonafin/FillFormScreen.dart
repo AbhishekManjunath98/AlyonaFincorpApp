@@ -160,472 +160,440 @@ class _FillFormScreenState extends State<FillFormScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Consumer<MyState>(
-        builder: (BuildContext context, value, Widget? child) {
-          return Scaffold(
-            appBar: appbarWidget(),
-            drawer: drawerWidget(),
-            body: Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(15.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    const Text(
-                      "New Loan Application",
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 22),
-                    ),
-                    const Text(
-                      "(Application Id : 0046798598)",
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14),
-                    ),
-                    const SizedBox(height: 25),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 15, right: 15),
-                      child: Text(
-                        "Note it is important to fill this application with correct data so that our team can verify the details and get in touch with you.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 97, 94, 94),
-                            fontSize: 14),
-                      ),
-                    ),
-                    const SizedBox(height: 25),
-                    Container(
-                      alignment: Alignment.topLeft,
-                      //  margin: const EdgeInsets.only(left: 40),
-                      child: const Text(
-                        "Personal Details",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.normal),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(48.0))),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(48.0))),
-                        hintText: 'Enter full name..',
-                      ),
-                      keyboardType: TextInputType.name,
-                      textCapitalization: TextCapitalization.characters,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14.0),
-                    ),
-                    const SizedBox(height: 10),
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.normal),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(48.0))),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(48.0))),
-                        hintText: 'Father full name..',
-                      ),
-                      keyboardType: TextInputType.name,
-                      textCapitalization: TextCapitalization.characters,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.0),
-                    ),
-                    const SizedBox(height: 10),
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.normal),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(48.0))),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(48.0))),
-                        hintText: 'Address..',
-                      ),
-                      keyboardType: TextInputType.streetAddress,
-                      textCapitalization: TextCapitalization.characters,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.0),
-                    ),
-                    const SizedBox(height: 10),
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.normal),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(48.0))),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(48.0))),
-                        hintText: 'Pin code..',
-                      ),
-                      keyboardType: TextInputType.phone,
-                      textCapitalization: TextCapitalization.characters,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.0),
-                    ),
-                    const SizedBox(height: 10),
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintStyle: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.normal),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.green, width: 2),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(48.0))),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.black),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(48.0))),
-                        hintText: 'Loan amount',
-                      ),
-                      keyboardType: TextInputType.phone,
-                      textCapitalization: TextCapitalization.characters,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 14.0),
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width - 40,
-                      height: 40,
-                      child: OutlinedButton(
-                          style: ButtonStyle(
-                            side: MaterialStateProperty.all(
-                                const BorderSide(color: Colors.black)),
-                            overlayColor: MaterialStateProperty.all(
-                                const Color.fromARGB(255, 148, 211, 151)),
-                          ),
-                          onPressed: () {
-                            dobDialog();
-                          },
-                          child: const Text(
-                            "Select Date of Birth",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(color: Colors.black, fontSize: 14),
-                          )),
-                    ),
-                    const SizedBox(height: 25),
-                    Container(
-                      alignment: Alignment.topLeft,
-                      // margin: const EdgeInsets.only(left: 40),
-                      child: const Text(
-                        "Personal Documents",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 200,
-                          height: 40,
-                          child: OutlinedButton(
-                              style: ButtonStyle(
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(color: Colors.black)),
-                                overlayColor: MaterialStateProperty.all(
-                                    const Color.fromARGB(255, 148, 211, 151)),
-                              ),
-                              onPressed: () async {
-                                filePickerAadharResult = FilePicker.platform
-                                        .pickFiles(type: FileType.any)
-                                    as Future<FilePickerResult>?;
-                              },
-                              child: const Text(
-                                "Upload Aadhar",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                              )),
-                        ),
-                        Image.asset(
-                          "assets/images/check.png",
-                          fit: BoxFit.cover,
-                          height: 50,
-                          width: 50,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 200,
-                          height: 40,
-                          child: OutlinedButton(
-                              style: ButtonStyle(
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(color: Colors.black)),
-                                overlayColor: MaterialStateProperty.all(
-                                    const Color.fromARGB(255, 148, 211, 151)),
-                              ),
-                              onPressed: () async {
-                                filePickerAadharResult = FilePicker.platform
-                                        .pickFiles(type: FileType.any)
-                                    as Future<FilePickerResult>?;
-                              },
-                              child: const Text(
-                                "Upload Pan",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                              )),
-                        ),
-                        Image.asset(
-                          "assets/images/check.png",
-                          fit: BoxFit.cover,
-                          height: 50,
-                          width: 50,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 200,
-                          height: 40,
-                          child: OutlinedButton(
-                              style: ButtonStyle(
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(color: Colors.black)),
-                                overlayColor: MaterialStateProperty.all(
-                                    const Color.fromARGB(255, 148, 211, 151)),
-                              ),
-                              onPressed: () async {
-                                filePickerAadharResult = FilePicker.platform
-                                        .pickFiles(type: FileType.any)
-                                    as Future<FilePickerResult>?;
-                              },
-                              child: const Text(
-                                "Upload Jati(Caste-Certificate)",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 12),
-                              )),
-                        ),
-                        Image.asset(
-                          "assets/images/check.png",
-                          fit: BoxFit.cover,
-                          height: 50,
-                          width: 50,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 200,
-                          height: 40,
-                          child: OutlinedButton(
-                              style: ButtonStyle(
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(color: Colors.black)),
-                                overlayColor: MaterialStateProperty.all(
-                                    const Color.fromARGB(255, 148, 211, 151)),
-                              ),
-                              onPressed: () async {
-                                filePickerAadharResult = FilePicker.platform
-                                        .pickFiles(type: FileType.any)
-                                    as Future<FilePickerResult>?;
-                              },
-                              child: const Text(
-                                "Upload Aawasiya",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                              )),
-                        ),
-                        Image.asset(
-                          "assets/images/check.png",
-                          fit: BoxFit.cover,
-                          height: 50,
-                          width: 50,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 200,
-                          height: 40,
-                          child: OutlinedButton(
-                              style: ButtonStyle(
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(color: Colors.black)),
-                                overlayColor: MaterialStateProperty.all(
-                                    const Color.fromARGB(255, 148, 211, 151)),
-                              ),
-                              onPressed: () async {
-                                filePickerAadharResult = FilePicker.platform
-                                        .pickFiles(type: FileType.any)
-                                    as Future<FilePickerResult>?;
-                              },
-                              child: const Text(
-                                "Upload Aay(Income)",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 12),
-                              )),
-                        ),
-                        Image.asset(
-                          "assets/images/check.png",
-                          fit: BoxFit.cover,
-                          height: 50,
-                          width: 50,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(
-                          width: 200,
-                          height: 40,
-                          child: OutlinedButton(
-                              style: ButtonStyle(
-                                side: MaterialStateProperty.all(
-                                    const BorderSide(color: Colors.black)),
-                                overlayColor: MaterialStateProperty.all(
-                                    const Color.fromARGB(255, 148, 211, 151)),
-                              ),
-                              onPressed: () async {
-                                filePickerAadharResult = FilePicker.platform
-                                        .pickFiles(type: FileType.any)
-                                    as Future<FilePickerResult>?;
-                              },
-                              child: const Text(
-                                "Upload Applicants Photo",
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 14),
-                              )),
-                        ),
-                        Image.asset(
-                          "assets/images/check.png",
-                          fit: BoxFit.cover,
-                          height: 50,
-                          width: 50,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 35),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width - 40,
-                      height: 50,
-                      child: TextButton(
-                          style: const ButtonStyle(
-                              backgroundColor:
-                                  MaterialStatePropertyAll(Colors.green)),
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const FormSuccessScreen()));
-                          },
-                          child: const Text(
-                            "Submit Application",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                fontSize: 18),
-                          )),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
-                      children: [
-                        Checkbox(
-                          fillColor:
-                              const MaterialStatePropertyAll(Colors.green),
-                          value: true,
-                          onChanged: (value) {},
-                        ),
-                        const SizedBox(
-                          width: 220,
-                          child: Text(
-                            "By sending us message you agree and give AlyonaFinance team to contact you using details submitted by you.",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 97, 94, 94),
-                                fontSize: 14),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 25),
-                    logoWidget()
-                  ],
+        child: Scaffold(
+      body: Container(
+        alignment: Alignment.center,
+        padding: const EdgeInsets.all(15.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              const Text(
+                "New Loan Application",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 22),
+              ),
+              const Text(
+                "(Application Id : 0046798598)",
+                style: TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14),
+              ),
+              const SizedBox(height: 25),
+              const Padding(
+                padding: EdgeInsets.only(left: 15, right: 15),
+                child: Text(
+                  "Note it is important to fill this application with correct data so that our team can verify the details and get in touch with you.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      color: Color.fromARGB(255, 97, 94, 94), fontSize: 14),
                 ),
               ),
-            ),
-          );
-        },
+              const SizedBox(height: 25),
+              Container(
+                alignment: Alignment.topLeft,
+                //  margin: const EdgeInsets.only(left: 40),
+                child: const Text(
+                  "Personal Details",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16),
+                ),
+              ),
+              const SizedBox(height: 15),
+              const TextField(
+                decoration: InputDecoration(
+                  hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.normal),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  hintText: 'Enter full name..',
+                ),
+                keyboardType: TextInputType.name,
+                textCapitalization: TextCapitalization.characters,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.0),
+              ),
+              const SizedBox(height: 10),
+              const TextField(
+                decoration: InputDecoration(
+                  hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.normal),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  hintText: 'Father full name..',
+                ),
+                keyboardType: TextInputType.name,
+                textCapitalization: TextCapitalization.characters,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14.0),
+              ),
+              const SizedBox(height: 10),
+              const TextField(
+                decoration: InputDecoration(
+                  hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.normal),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  hintText: 'Address..',
+                ),
+                keyboardType: TextInputType.streetAddress,
+                textCapitalization: TextCapitalization.characters,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14.0),
+              ),
+              const SizedBox(height: 10),
+              const TextField(
+                decoration: InputDecoration(
+                  hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.normal),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  hintText: 'Pin code..',
+                ),
+                keyboardType: TextInputType.phone,
+                textCapitalization: TextCapitalization.characters,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14.0),
+              ),
+              const SizedBox(height: 10),
+              const TextField(
+                decoration: InputDecoration(
+                  hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.normal),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  hintText: 'Loan amount',
+                ),
+                keyboardType: TextInputType.phone,
+                textCapitalization: TextCapitalization.characters,
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14.0),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 40,
+                height: 40,
+                child: OutlinedButton(
+                    style: ButtonStyle(
+                      side: MaterialStateProperty.all(
+                          const BorderSide(color: Colors.black)),
+                      overlayColor: MaterialStateProperty.all(
+                          const Color.fromARGB(255, 148, 211, 151)),
+                    ),
+                    onPressed: () {
+                      dobDialog();
+                    },
+                    child: const Text(
+                      "Select Date of Birth",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                    )),
+              ),
+              const SizedBox(height: 25),
+              Container(
+                alignment: Alignment.topLeft,
+                // margin: const EdgeInsets.only(left: 40),
+                child: const Text(
+                  "Personal Documents",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    height: 40,
+                    child: OutlinedButton(
+                        style: ButtonStyle(
+                          side: MaterialStateProperty.all(
+                              const BorderSide(color: Colors.black)),
+                          overlayColor: MaterialStateProperty.all(
+                              const Color.fromARGB(255, 148, 211, 151)),
+                        ),
+                        onPressed: () async {
+                          filePickerAadharResult =
+                              FilePicker.platform.pickFiles(type: FileType.any)
+                                  as Future<FilePickerResult>?;
+                        },
+                        child: const Text(
+                          "Upload Aadhar",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(color: Colors.black, fontSize: 14),
+                        )),
+                  ),
+                  Image.asset(
+                    "assets/images/check.png",
+                    fit: BoxFit.cover,
+                    height: 50,
+                    width: 50,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    height: 40,
+                    child: OutlinedButton(
+                        style: ButtonStyle(
+                          side: MaterialStateProperty.all(
+                              const BorderSide(color: Colors.black)),
+                          overlayColor: MaterialStateProperty.all(
+                              const Color.fromARGB(255, 148, 211, 151)),
+                        ),
+                        onPressed: () async {
+                          filePickerAadharResult =
+                              FilePicker.platform.pickFiles(type: FileType.any)
+                                  as Future<FilePickerResult>?;
+                        },
+                        child: const Text(
+                          "Upload Pan",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(color: Colors.black, fontSize: 14),
+                        )),
+                  ),
+                  Image.asset(
+                    "assets/images/check.png",
+                    fit: BoxFit.cover,
+                    height: 50,
+                    width: 50,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    height: 40,
+                    child: OutlinedButton(
+                        style: ButtonStyle(
+                          side: MaterialStateProperty.all(
+                              const BorderSide(color: Colors.black)),
+                          overlayColor: MaterialStateProperty.all(
+                              const Color.fromARGB(255, 148, 211, 151)),
+                        ),
+                        onPressed: () async {
+                          filePickerAadharResult =
+                              FilePicker.platform.pickFiles(type: FileType.any)
+                                  as Future<FilePickerResult>?;
+                        },
+                        child: const Text(
+                          "Upload Jati(Caste-Certificate)",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(color: Colors.black, fontSize: 12),
+                        )),
+                  ),
+                  Image.asset(
+                    "assets/images/check.png",
+                    fit: BoxFit.cover,
+                    height: 50,
+                    width: 50,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    height: 40,
+                    child: OutlinedButton(
+                        style: ButtonStyle(
+                          side: MaterialStateProperty.all(
+                              const BorderSide(color: Colors.black)),
+                          overlayColor: MaterialStateProperty.all(
+                              const Color.fromARGB(255, 148, 211, 151)),
+                        ),
+                        onPressed: () async {
+                          filePickerAadharResult =
+                              FilePicker.platform.pickFiles(type: FileType.any)
+                                  as Future<FilePickerResult>?;
+                        },
+                        child: const Text(
+                          "Upload Aawasiya",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(color: Colors.black, fontSize: 14),
+                        )),
+                  ),
+                  Image.asset(
+                    "assets/images/check.png",
+                    fit: BoxFit.cover,
+                    height: 50,
+                    width: 50,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    height: 40,
+                    child: OutlinedButton(
+                        style: ButtonStyle(
+                          side: MaterialStateProperty.all(
+                              const BorderSide(color: Colors.black)),
+                          overlayColor: MaterialStateProperty.all(
+                              const Color.fromARGB(255, 148, 211, 151)),
+                        ),
+                        onPressed: () async {
+                          filePickerAadharResult =
+                              FilePicker.platform.pickFiles(type: FileType.any)
+                                  as Future<FilePickerResult>?;
+                        },
+                        child: const Text(
+                          "Upload Aay(Income)",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(color: Colors.black, fontSize: 12),
+                        )),
+                  ),
+                  Image.asset(
+                    "assets/images/check.png",
+                    fit: BoxFit.cover,
+                    height: 50,
+                    width: 50,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 200,
+                    height: 40,
+                    child: OutlinedButton(
+                        style: ButtonStyle(
+                          side: MaterialStateProperty.all(
+                              const BorderSide(color: Colors.black)),
+                          overlayColor: MaterialStateProperty.all(
+                              const Color.fromARGB(255, 148, 211, 151)),
+                        ),
+                        onPressed: () async {
+                          filePickerAadharResult =
+                              FilePicker.platform.pickFiles(type: FileType.any)
+                                  as Future<FilePickerResult>?;
+                        },
+                        child: const Text(
+                          "Upload Applicants Photo",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(color: Colors.black, fontSize: 14),
+                        )),
+                  ),
+                  Image.asset(
+                    "assets/images/check.png",
+                    fit: BoxFit.cover,
+                    height: 50,
+                    width: 50,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 35),
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 40,
+                height: 50,
+                child: TextButton(
+                    style: const ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll(Colors.green)),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const FormSuccessScreen()));
+                    },
+                    child: const Text(
+                      "Submit Application",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18),
+                    )),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Checkbox(
+                    fillColor: const MaterialStatePropertyAll(Colors.green),
+                    value: true,
+                    onChanged: (value) {},
+                  ),
+                  const SizedBox(
+                    width: 220,
+                    child: Text(
+                      "By sending us message you agree and give AlyonaFinance team to contact you using details submitted by you.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 97, 94, 94), fontSize: 14),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 25),
+              logoWidget()
+            ],
+          ),
+        ),
       ),
-    );
+    ));
   }
 
   Future<String?> dobDialog() {

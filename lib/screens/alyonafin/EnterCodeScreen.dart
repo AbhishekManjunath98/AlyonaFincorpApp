@@ -258,7 +258,8 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
           style: const ButtonStyle(
               backgroundColor: MaterialStatePropertyAll(Colors.green)),
           onPressed: () {
-            successDialog();
+            //successDialog();
+            failureDialog();
           },
           child: const Text(
             "Verify Code",
