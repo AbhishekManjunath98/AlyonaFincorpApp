@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+import 'package:whatsappuiclone/screens/HomeScreen.dart';
 import 'package:whatsappuiclone/screens/alyonafin/FillFormScreen.dart';
 
 class EnterCodeScreen extends StatefulWidget {
@@ -63,6 +64,51 @@ Widget isoWidget() {
 }
 
 class _EnterCodeScreenState extends State<EnterCodeScreen> {
+  var passcodesArray = [
+    '88UNFW',
+    'OAJXII',
+    'IUTNXM',
+    'BCKLQO',
+    'VTM4JT',
+    'B93AFI',
+    'OATYZU',
+    'I489KB',
+    'GOL3TB',
+    'S2332B',
+    'XO74KM',
+    'R8UAOD',
+    'A6F5TX',
+    'S0QT51',
+    '0SSE7G',
+    'E0U5JI',
+    '680IJD',
+    'HRPZDE',
+    'GMFDEW',
+    '8K9DFR',
+    'RT7QPE',
+    'CMKUXX',
+    'Q0AR7I',
+    'VUI59V',
+    'RTUWOT',
+    'SLDV9C',
+    '7JPPK2',
+    '7UWA46',
+    'ZQFT3B',
+    '66PD72'
+  ];
+  final inputPassword = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    inputPassword.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -170,7 +216,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const FillFormScreen()));
+                                        const HomeScreen()));
                           },
                           child: const Text(
                             "Fill New Application",
@@ -250,6 +296,36 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                 ))));
   }
 
+  void showSnackBar(
+      {required String type, required String msg, int? duration}) {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    final snackBar = SnackBar(
+      backgroundColor: type == "f" ? Colors.red : Colors.green,
+      duration: Duration(seconds: duration ?? 8),
+      content: Text(
+        msg,
+        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 17),
+      ),
+    );
+
+    scaffoldMessenger.showSnackBar(snackBar);
+  }
+
+  void validatePasscode() {
+    if (inputPassword.text.length < 6) {
+      showSnackBar(
+          type: "f",
+          msg: "Please enter a Valid Agent Code to Verify...",
+          duration: 4);
+      return;
+    }
+    if (passcodesArray.contains(inputPassword.text)) {
+      successDialog();
+    } else {
+      failureDialog();
+    }
+  }
+
   Widget verifyButton(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 60,
@@ -258,8 +334,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
           style: const ButtonStyle(
               backgroundColor: MaterialStatePropertyAll(Colors.green)),
           onPressed: () {
-            //successDialog();
-            failureDialog();
+            validatePasscode();
           },
           child: const Text(
             "Verify Code",
@@ -312,6 +387,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
       enableIMEPersonalizedLearning: true,
       enableSuggestions: true,
       showCursor: true,
+      controller: inputPassword,
       onCompleted: (pin) => print(pin),
     );
   }

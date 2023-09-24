@@ -248,7 +248,7 @@ class _ContactScreenState extends State<ContactScreen> {
                   keyboardType: TextInputType.phone,
                   textCapitalization: TextCapitalization.words,
                   controller: inputPhone,
-                  maxLength: 10,
+                 
                   style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w700,

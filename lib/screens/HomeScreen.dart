@@ -8,6 +8,28 @@ import 'package:whatsappuiclone/screens/alyonafin/FormFailureScreen.dart';
 import 'package:whatsappuiclone/screens/alyonafin/FormSuccessScreen.dart';
 import 'package:whatsappuiclone/screens/alyonafin/SplashScreen.dart';
 
+class MyCustomScaffold extends StatelessWidget {
+  final Widget body;
+  // final AppBar appBar;
+  //final Widget drawer;
+
+  const MyCustomScaffold({
+    Key? key,
+    required this.body,
+    //this.appBar,
+    //this.drawer,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: appbarWidget(),
+      drawer: drawerWidget(),
+      body: body,
+    );
+  }
+}
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -38,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return const TabBarView(
       children: <Widget>[
         Center(
-          child:  FillFormScreen(),
+          child: FillFormScreen(),
         ),
         Center(
           child: ContactScreen(),

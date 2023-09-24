@@ -5,6 +5,7 @@ import 'dart:math';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
@@ -247,6 +248,7 @@ class _FillFormScreenState extends State<FillFormScreen> {
   }
 
   void validateFormDetails() {
+    HapticFeedback.vibrate();
     if (inputName.text.isNotEmpty &&
         inputfathersName.text.isNotEmpty &&
         inputaddress.text.isNotEmpty &&

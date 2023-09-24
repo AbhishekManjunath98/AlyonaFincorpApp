@@ -158,13 +158,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        // fontFamily: 'RobotoMono',
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 4, 190, 11)),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
     );
   }
 }
