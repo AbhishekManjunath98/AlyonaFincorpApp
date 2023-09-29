@@ -1,11 +1,15 @@
 // ignore_for_file: file_names
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:whatsappuiclone/screens/alyonafin/ContactScreen.dart';
 import 'package:whatsappuiclone/screens/alyonafin/EnterCodeScreen.dart';
 import 'package:whatsappuiclone/screens/alyonafin/FillFormScreen.dart';
 import 'package:whatsappuiclone/screens/alyonafin/FormFailureScreen.dart';
 import 'package:whatsappuiclone/screens/alyonafin/FormSuccessScreen.dart';
+import 'package:whatsappuiclone/screens/alyonafin/GalleryScreen.dart';
 import 'package:whatsappuiclone/screens/alyonafin/SplashScreen.dart';
 
 class MyCustomScaffold extends StatelessWidget {
@@ -38,6 +42,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
       initialIndex: 1,
       length: 2,
       child: Scaffold(
+        key: _scaffoldKey,
         drawer: drawerWidget(),
         appBar: appbarWidget(),
         body: tabbarWidget(),
@@ -60,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return const TabBarView(
       children: <Widget>[
         Center(
-          child: FillFormScreen(),
+          child: GalleryScreen(),
         ),
         Center(
           child: ContactScreen(),
@@ -114,7 +121,9 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             leading: const Icon(Icons.home),
-            onTap: () {},
+            onTap: () {
+              _scaffoldKey.currentState!.closeDrawer();
+            },
           ),
           ListTile(
             title: const Text(
@@ -122,7 +131,9 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             leading: const Icon(Icons.edit),
-            onTap: () {},
+            onTap: () {
+              _scaffoldKey.currentState!.closeDrawer();
+            },
           ),
           ListTile(
             title: const Text(
@@ -130,7 +141,10 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             leading: const Icon(Icons.browse_gallery),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const GalleryScreen()));
+            },
           ),
           ListTile(
             title: const Text(
@@ -146,7 +160,9 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             leading: const Icon(Icons.person),
-            onTap: () {},
+            onTap: () async {
+              await launchUrl(Uri.parse("https://alyonafinance.in"));
+            },
           ),
           ListTile(
             title: const Text(
@@ -154,7 +170,9 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             leading: const Icon(Icons.web),
-            onTap: () {},
+            onTap: () async {
+              await launchUrl(Uri.parse("https://alyonafinance.in"));
+            },
           ),
           ListTile(
             title: const Text(
@@ -170,7 +188,12 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             leading: const Icon(Icons.rate_review),
-            onTap: () {},
+            onTap: () async {
+              await launchUrl(
+                  Uri.parse(
+                      'market://details?id=com.amf.alyonamicrofinance'),
+                  mode: LaunchMode.externalNonBrowserApplication);
+            },
           ),
           ListTile(
             title: const Text(
@@ -178,7 +201,21 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             leading: const Icon(Icons.warning),
-            onTap: () {},
+            onTap: () async {
+              await launchUrl(
+                  Uri.parse("https://alyonafinance.in/terms-and-conditions"));
+            },
+          ),
+          ListTile(
+            title: const Text(
+              "Privacy Policy",
+              style: TextStyle(color: Colors.black, fontSize: 18),
+            ),
+            leading: const Icon(Icons.warning),
+            onTap: () async {
+              await launchUrl(
+                  Uri.parse("https://alyonafinance.in/privacy-policy"));
+            },
           ),
           ListTile(
             title: const Text(
@@ -186,7 +223,9 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             leading: const Icon(Icons.exit_to_app),
-            onTap: () {},
+            onTap: () {
+              exit(0);
+            },
           )
         ],
       ),
