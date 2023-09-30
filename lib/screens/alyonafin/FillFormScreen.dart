@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mailer/flutter_mailer.dart';
@@ -169,6 +170,7 @@ class _FillFormScreenState extends State<FillFormScreen> {
   String aayPath = "";
   String photoPath = "";
   final inputName = TextEditingController();
+  final inputPhone = TextEditingController();
   final inputfathersName = TextEditingController();
   final inputaddress = TextEditingController();
   final inputpinCode = TextEditingController();
@@ -203,6 +205,35 @@ class _FillFormScreenState extends State<FillFormScreen> {
   Future<void> sendDirectBypassedMessage() async {
     String msg = "+918434076005";
     List<String> recepients = [""];
+  }
+
+  Future<void> sendFirenaseOtp(String phone) async {
+    if (inputPhone.text.isEmpty) {
+      showSnackBar(
+          type: "f",
+          msg: "Mobile Number is Needed to send confirmation OTP!!!");
+      return;
+    }
+
+    FirebaseAuth.instance
+        .verifyPhoneNumber(
+          phoneNumber: '+91$phone',
+          verificationCompleted: (PhoneAuthCredential credential) {},
+          verificationFailed: (FirebaseAuthException e) {},
+          codeSent: (String verificationId, int? resendToken) {},
+          codeAutoRetrievalTimeout: (String verificationId) {},
+        )
+        .then((value) => {
+              print("Otp send successfully on phone number +91$phone"),
+              showSnackBar(
+                  type: "s",
+                  msg: "Otp send successfully on phone number +91$phone")
+            })
+        .onError((error, stackTrace) => {
+              print("Error occured while sending otp : $error"),
+              showSnackBar(
+                  type: "f", msg: "Error occured while sending otp : $error")
+            });
   }
 
   void flutterMailer() async {
@@ -252,6 +283,7 @@ class _FillFormScreenState extends State<FillFormScreen> {
   void validateFormDetails() {
     HapticFeedback.vibrate();
     if (inputName.text.isNotEmpty &&
+        inputPhone.text.isNotEmpty &&
         inputfathersName.text.isNotEmpty &&
         inputaddress.text.isNotEmpty &&
         inputpinCode.text.isNotEmpty &&
@@ -398,6 +430,29 @@ class _FillFormScreenState extends State<FillFormScreen> {
                 style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w700,
+                    fontSize: 14.0),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                decoration: const InputDecoration(
+                  hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.normal),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  hintText: 'Enter Mobile..',
+                ),
+                keyboardType: TextInputType.phone,
+                textCapitalization: TextCapitalization.characters,
+                controller: inputPhone,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
                     fontSize: 14.0),
               ),
               const SizedBox(height: 10),
@@ -908,7 +963,9 @@ class _FillFormScreenState extends State<FillFormScreen> {
                             const Color.fromARGB(255, 148, 211, 151)),
                       ),
                       onPressed: () async {
-                        sendDirectBypassedMessage();
+                        //sendDirectBypassedMessage();
+                        sendFirenaseOtp(inputPhone.text);
+                        // sendFirenaseOtp("9977665544");
                       },
                       child: const Text(
                         "Send Confirmation Message",
