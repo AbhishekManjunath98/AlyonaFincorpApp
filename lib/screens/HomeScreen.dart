@@ -1,16 +1,15 @@
 // ignore_for_file: file_names
 
 import 'dart:io';
+import 'dart:math';
 
+import 'package:com.amf.alyonamicrofinance/screens/alyonafin/ContactScreen.dart';
+import 'package:com.amf.alyonamicrofinance/screens/alyonafin/FillFormScreen.dart';
+import 'package:com.amf.alyonamicrofinance/screens/alyonafin/GalleryScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:whatsappuiclone/screens/alyonafin/ContactScreen.dart';
-import 'package:whatsappuiclone/screens/alyonafin/EnterCodeScreen.dart';
-import 'package:whatsappuiclone/screens/alyonafin/FillFormScreen.dart';
-import 'package:whatsappuiclone/screens/alyonafin/FormFailureScreen.dart';
-import 'package:whatsappuiclone/screens/alyonafin/FormSuccessScreen.dart';
-import 'package:whatsappuiclone/screens/alyonafin/GalleryScreen.dart';
-import 'package:whatsappuiclone/screens/alyonafin/SplashScreen.dart';
+
 
 class MyCustomScaffold extends StatelessWidget {
   final Widget body;
@@ -63,11 +62,41 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  String generateRandomNumber(int length) {
+    const digits = '0123456789';
+    final random = Random();
+    final randomNumber = StringBuffer();
+    for (var i = 0; i < length; i++) {
+      randomNumber.write(digits[random.nextInt(digits.length)]);
+    }
+    return randomNumber.toString();
+  }
+
+  void flutterMailer() async {
+    const GMAIL_SCHEMA = 'com.google.android.gm';
+
+    final MailOptions mailOptions = MailOptions(
+      subject:
+          'New Contact Query Recieved [00${generateRandomNumber(6)}] (Alyona MicroFinance)',
+      recipients: ['example@example.com'],
+      isHTML: true,
+      bccRecipients: ['other@example.com'],
+      ccRecipients: ['third@example.com'],
+      appSchema: GMAIL_SCHEMA,
+    );
+    try {
+      Future<MailerResponse> mr = FlutterMailer.send(mailOptions);
+      print("mr : ${mr.toString()}");
+    } on Exception catch (e) {
+      print("fluttermailer error : ${e.toString()}");
+    }
+  }
+
   Widget tabbarWidget() {
     return const TabBarView(
       children: <Widget>[
         Center(
-          child: GalleryScreen(),
+          child: FillFormScreen(),
         ),
         Center(
           child: ContactScreen(),
@@ -142,8 +171,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             leading: const Icon(Icons.browse_gallery),
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const GalleryScreen()));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const GalleryScreen()));
             },
           ),
           ListTile(
@@ -152,7 +183,9 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             leading: const Icon(Icons.contact_page),
-            onTap: () {},
+            onTap: () {
+              flutterMailer();
+            },
           ),
           ListTile(
             title: const Text(
@@ -180,7 +213,9 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
             leading: const Icon(Icons.contact_mail),
-            onTap: () {},
+            onTap: () {
+              flutterMailer();
+            },
           ),
           ListTile(
             title: const Text(
@@ -190,8 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
             leading: const Icon(Icons.rate_review),
             onTap: () async {
               await launchUrl(
-                  Uri.parse(
-                      'market://details?id=com.amf.alyonamicrofinance'),
+                  Uri.parse('market://details?id=com.amf.alyonamicrofinance'),
                   mode: LaunchMode.externalNonBrowserApplication);
             },
           ),

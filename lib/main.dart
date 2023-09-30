@@ -1,9 +1,6 @@
-import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:com.amf.alyonamicrofinance/screens/alyonafin/SplashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:whatsappuiclone/screens/HomeScreen.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:whatsappuiclone/screens/alyonafin/SplashScreen.dart';
 
 void main() {
   runApp(const MyApp());

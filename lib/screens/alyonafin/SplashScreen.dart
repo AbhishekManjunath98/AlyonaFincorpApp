@@ -1,7 +1,8 @@
 import 'dart:async';
 
+import 'package:com.amf.alyonamicrofinance/screens/HomeScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:whatsappuiclone/screens/alyonafin/EnterCodeScreen.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,8 +13,11 @@ class SplashScreen extends StatefulWidget {
 
 void redirectHomeScreen(BuildContext context) {
   Timer(const Duration(seconds: 6), () {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => const EnterCodeScreen()));
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      (Route<dynamic> route) => false,
+    );
   });
 }
 
@@ -29,15 +33,15 @@ class _SplashScreenState extends State<SplashScreen> {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.all(15.0),
             child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            brandingIcon(),
-            const SizedBox(height: 30),
-            downtext()
-          ],
-        )),
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                brandingIcon(),
+                const SizedBox(height: 30),
+                downtext()
+              ],
+            )),
       ),
     );
   }
@@ -49,7 +53,9 @@ class _SplashScreenState extends State<SplashScreen> {
           "Note : Loan processing fee will not be refunded and we at Alyona Finance don't guarntee loan approval. Read our Privacy Policy and Terms & Conditions for more info inside the app",
           textAlign: TextAlign.center,
           style: TextStyle(
-              color: Color.fromARGB(255, 52, 50, 50), fontSize: 12, fontWeight: FontWeight.w700),
+              color: Color.fromARGB(255, 52, 50, 50),
+              fontSize: 12,
+              fontWeight: FontWeight.w500),
         ),
       ],
     );

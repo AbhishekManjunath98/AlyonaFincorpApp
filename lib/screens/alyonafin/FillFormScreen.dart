@@ -10,7 +10,6 @@ import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
-import 'package:whatsappuiclone/screens/alyonafin/FormSuccessScreen.dart';
 
 class MyState {
   PreferredSizeWidget appbar;
@@ -135,9 +134,9 @@ Widget logoWidget() {
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(80))),
         child: Image.asset(
-          "assets/images/alyonaicon.jpeg",
-          height: 90,
-          width: 90,
+          "assets/images/alyonatrans.png",
+          height: 100,
+          width: 100,
         ),
       ),
       const Text(
@@ -201,7 +200,10 @@ class _FillFormScreenState extends State<FillFormScreen> {
     return randomNumber.toString();
   }
 
-  void sendMessage() {}
+  Future<void> sendDirectBypassedMessage() async {
+    String msg = "+918434076005";
+    List<String> recepients = [""];
+  }
 
   void flutterMailer() async {
     const GMAIL_SCHEMA = 'com.google.android.gm';
@@ -894,6 +896,42 @@ class _FillFormScreenState extends State<FillFormScreen> {
                           fontSize: 18),
                     )),
               ),
+              const SizedBox(height: 10),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width - 40,
+                  height: 40,
+                  child: OutlinedButton(
+                      style: ButtonStyle(
+                        side: MaterialStateProperty.all(
+                            const BorderSide(color: Colors.green)),
+                        overlayColor: MaterialStateProperty.all(
+                            const Color.fromARGB(255, 148, 211, 151)),
+                      ),
+                      onPressed: () async {
+                        sendDirectBypassedMessage();
+                      },
+                      child: const Text(
+                        "Send Confirmation Message",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.black, fontSize: 14),
+                      ))),
+              const SizedBox(height: 10),
+              SizedBox(
+                  width: MediaQuery.of(context).size.width - 40,
+                  height: 40,
+                  child: OutlinedButton(
+                      style: ButtonStyle(
+                        side: MaterialStateProperty.all(
+                            const BorderSide(color: Colors.green)),
+                        overlayColor: MaterialStateProperty.all(
+                            const Color.fromARGB(255, 148, 211, 151)),
+                      ),
+                      onPressed: () async {},
+                      child: const Text(
+                        "Send OTP Message",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.black, fontSize: 14),
+                      ))),
               const SizedBox(height: 10),
               Row(
                 children: [
