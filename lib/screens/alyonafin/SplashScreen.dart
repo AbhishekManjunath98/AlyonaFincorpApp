@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:com.amf.alyonamicrofinance/screens/HomeScreen.dart';
+import 'package:com.amf.alyonamicrofinance/screens/alyonafin/EnterCodeScreen.dart';
 import 'package:flutter/material.dart';
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,7 +15,7 @@ void redirectHomeScreen(BuildContext context) {
   Timer(const Duration(seconds: 6), () {
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      MaterialPageRoute(builder: (context) => const EnterCodeScreen()),
       (Route<dynamic> route) => false,
     );
   });
