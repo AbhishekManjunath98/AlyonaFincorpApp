@@ -241,13 +241,12 @@ class _FillFormScreenState extends State<FillFormScreen> {
 
     final MailOptions mailOptions = MailOptions(
       body:
-          'Just Now A New Loan Application Was Submitted From App, Here are Deatails : <BR><BR> Applicant Name : ${inputName.text}<BR> Father Name : ${inputfathersName.text}<BR> Address : ${inputaddress.text}<BR><BR> Pin Code : ${inputpinCode.text}<BR> Loan Amount : ${inputloanAmount.text}<BR> Date of Birth : ${inputDob!.value.startDate.toString()}<BR> Date : ${DateTime.now()}<BR><BR> Below are the attached documents(Aadhar + Pan + Jati + Aaya + Aawasiya + Photo)<BR><BR> Happy Loan Processing<BR> Cheers, Alyona MicroFinance Team<BR> Date : ${DateTime.now()}',
+          'Just Now A New Loan Application Was Submitted From App, Here are Deatails : <BR><BR> Applicant Name : ${inputName.text}<BR> Father Name : ${inputfathersName.text}<BR> Address : ${inputaddress.text}<BR><BR> Phone Number : ${inputPhone.text} <BR><BR> Pin Code : ${inputpinCode.text}<BR> Loan Amount : ${inputloanAmount.text}<BR> Date of Birth : ${inputDob!.value.startDate.toString()}<BR> Date : ${DateTime.now()}<BR><BR> Below are the attached documents(Aadhar + Pan + Jati + Aaya + Aawasiya + Photo)<BR><BR> Happy Loan Processing<BR> Cheers, Alyona MicroFinance Team<BR> Date : ${DateTime.now()}',
       subject:
           'New Loan Application Recieved [00${generateRandomNumber(6)}] (Alyona MicroFinance)',
-      recipients: ['bibhakumori@gmail.com'],
+      recipients: ['alyonamicrofinance@gmail.com'],
       isHTML: true,
-      bccRecipients: ['other@example.com'],
-      ccRecipients: ['third@example.com'],
+      bccRecipients: ['gunjan@geekforce.in'],
       attachments: [
         aadharPath,
         panPath,

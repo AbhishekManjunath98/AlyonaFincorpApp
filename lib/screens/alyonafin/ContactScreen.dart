@@ -166,10 +166,9 @@ class _ContactScreenState extends State<ContactScreen> {
       body:
           'Just now new contact message recieved from our app. <BR><BR> Applicant Name : ${inputName.text}<BR>Phone Number : ${inputPhone.text} <BR>Message : ${inputMessage.text} <BR> Date : ${DateTime.now().toString()} <BR><BR> Happy Loan Processing<BR> Cheers, Alyona MicroFinance Team<BR> Date : ${DateTime.now()}',
       subject: 'New Contact Query Recieved [00${generateRandomNumber(6)}] (Alyona MicroFinance)',
-      recipients: ['example@example.com'],
+      recipients: ['alyonamicrofinance@gmail.com'],
       isHTML: true,
-      bccRecipients: ['other@example.com'],
-      ccRecipients: ['third@example.com'],
+      bccRecipients: ['gunjan@geekforce.in'],
       appSchema: GMAIL_SCHEMA,
     );
     try {

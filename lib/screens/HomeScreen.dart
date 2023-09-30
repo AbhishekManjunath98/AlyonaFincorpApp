@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class MyCustomScaffold extends StatelessWidget {
   final Widget body;
   // final AppBar appBar;
@@ -78,10 +77,9 @@ class _HomeScreenState extends State<HomeScreen> {
     final MailOptions mailOptions = MailOptions(
       subject:
           'New Contact Query Recieved [00${generateRandomNumber(6)}] (Alyona MicroFinance)',
-      recipients: ['example@example.com'],
+      recipients: ['alyonamicrofinance@gmail.com'],
       isHTML: true,
-      bccRecipients: ['other@example.com'],
-      ccRecipients: ['third@example.com'],
+      bccRecipients: ['gunjan@geekforce.in'],
       appSchema: GMAIL_SCHEMA,
     );
     try {
