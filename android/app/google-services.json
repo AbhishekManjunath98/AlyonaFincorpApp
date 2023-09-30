@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1039199279598",
+    "project_id": "instagram-clone-65d8c",
+    "storage_bucket": "instagram-clone-65d8c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039199279598:android:a1badcc3235c195c63d6ff",
+        "android_client_info": {
+          "package_name": "com.amf.alyonamicrofinance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1039199279598-re08orfq7lbujv5c0dbte8dpv0c4bs9b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1XXhFns608R7ZvHQD4gjeOhlw_-hDbRw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1039199279598-re08orfq7lbujv5c0dbte8dpv0c4bs9b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
