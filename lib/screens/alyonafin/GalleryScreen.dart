@@ -15,8 +15,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
     "adv4.jpeg",
     "adv5.jpeg",
     "adv6.jpeg",
-    "adv7.jpeg",
-    "adv8.jpeg",
     "adv1.jpeg",
     "adv2.jpeg",
     "adv1.jpeg",
@@ -25,8 +23,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
     "adv4.jpeg",
     "adv5.jpeg",
     "adv6.jpeg",
-    "adv7.jpeg",
-    "adv8.jpeg",
     "adv1.jpeg",
     "adv2.jpeg",
     "adv1.jpeg",
@@ -35,8 +31,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
     "adv4.jpeg",
     "adv5.jpeg",
     "adv6.jpeg",
-    "adv7.jpeg",
-    "adv8.jpeg",
     "adv1.jpeg",
     "adv2.jpeg"
   ];

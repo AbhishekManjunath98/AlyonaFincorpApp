@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mailer/flutter_mailer.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server/gmail.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
@@ -171,6 +173,7 @@ class _FillFormScreenState extends State<FillFormScreen> {
   String photoPath = "";
   final inputName = TextEditingController();
   final inputPhone = TextEditingController();
+  final inputEmail = TextEditingController();
   final inputfathersName = TextEditingController();
   final inputaddress = TextEditingController();
   final inputpinCode = TextEditingController();
@@ -190,6 +193,58 @@ class _FillFormScreenState extends State<FillFormScreen> {
     inputpinCode.dispose();
     inputloanAmount.dispose();
     super.dispose();
+  }
+
+  void sendMail(
+      {required String destEmail,
+      required String name,
+      required String amount,
+      required String mobile}) async {
+    if (inputName.text.isNotEmpty &&
+        inputPhone.text.isNotEmpty &&
+        inputloanAmount.text.isNotEmpty &&
+        destEmail.isNotEmpty) {
+      String username = 'alyonamicrofinance@gmail.com';
+      String password = 'wizkobtwrssqnrui';
+      String randNumber = generateRandomNumber(6);
+
+      final smtpServer = gmail(username, password);
+
+      final message = Message()
+        ..from = Address(username, 'Alyona MicroFinance')
+        ..recipients.add(destEmail)
+        ..ccRecipients.addAll(['gunjan@geekforce.in'])
+        ..bccRecipients.add(const Address('alyonamicrofinance@gmail.com'))
+        ..subject =
+            'New Loan Application Recieved [0AF$randNumber] (Alyona MicroFinance)'
+        // ..text = 'This is the plain text.\nThis is line 2 of the text part.'
+        ..html =
+            "<h2>Dear $name Your Loan Application [0AF$randNumber] of Amount ₹$amount Processed Successfully and we @Alyona MicroFinance forwarding it further.</h2>\n<p>We have successfully processed your loan amount <b>₹$amount</b> with application <b>$name</b> and further information we will send on your mobile <b>+91$mobile</b>, make sure to keep looking and take note of your Application number.<b>[0AF$randNumber]</b></p>\n\nHappy Loan Processing<BR> Cheers, Alyona MicroFinance Team<BR> Mail Us : alyonamicrofinance@gmail.com<BR> Our Website : www.alyonafinance.in<BR> Date : ${DateTime.now()}";
+
+      try {
+        final sendReport = await send(message, smtpServer);
+        print('Message sent: $sendReport');
+        showSnackBar(
+            type: "s",
+            msg: "Email OTP and Confirmation sent successfully on email ");
+        SnackBar(
+          content: Text(sendReport.toString()),
+          duration: const Duration(seconds: 10),
+        );
+      } on MailerException catch (e) {
+        print('Message not sent.${e.message}');
+        showSnackBar(
+            type: "f", msg: "Something went wrong while sending email..$e");
+        for (var p in e.problems) {
+          print('Problem: ${p.code}: ${p.msg}');
+        }
+      }
+    } else {
+      showSnackBar(
+          type: "f",
+          msg:
+              "Valid email, customer name, Loan amount and Mobile number is required to send OTP mail..");
+    }
   }
 
   String generateRandomNumber(int length) {
@@ -449,6 +504,29 @@ class _FillFormScreenState extends State<FillFormScreen> {
                 keyboardType: TextInputType.phone,
                 textCapitalization: TextCapitalization.characters,
                 controller: inputPhone,
+                style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.0),
+              ),
+              const SizedBox(height: 10),
+              TextField(
+                decoration: const InputDecoration(
+                  hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.normal),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                      borderRadius: BorderRadius.all(Radius.circular(48.0))),
+                  hintText: 'Enter Email ID',
+                ),
+                keyboardType: TextInputType.emailAddress,
+                textCapitalization: TextCapitalization.characters,
+                controller: inputEmail,
                 style: const TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
@@ -963,8 +1041,13 @@ class _FillFormScreenState extends State<FillFormScreen> {
                       ),
                       onPressed: () async {
                         //sendDirectBypassedMessage();
-                        sendFirenaseOtp(inputPhone.text);
+                        //sendFirenaseOtp(inputPhone.text);
                         // sendFirenaseOtp("9977665544");
+                        sendMail(
+                            destEmail: inputEmail.text,
+                            name: inputName.text,
+                            amount: inputloanAmount.text,
+                            mobile: inputPhone.text);
                       },
                       child: const Text(
                         "Send Confirmation Message",
@@ -972,22 +1055,7 @@ class _FillFormScreenState extends State<FillFormScreen> {
                         style: TextStyle(color: Colors.black, fontSize: 14),
                       ))),
               const SizedBox(height: 10),
-              SizedBox(
-                  width: MediaQuery.of(context).size.width - 40,
-                  height: 40,
-                  child: OutlinedButton(
-                      style: ButtonStyle(
-                        side: MaterialStateProperty.all(
-                            const BorderSide(color: Colors.green)),
-                        overlayColor: MaterialStateProperty.all(
-                            const Color.fromARGB(255, 148, 211, 151)),
-                      ),
-                      onPressed: () async {},
-                      child: const Text(
-                        "Send OTP Message",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(color: Colors.black, fontSize: 14),
-                      ))),
+             
               const SizedBox(height: 10),
               Row(
                 children: [
